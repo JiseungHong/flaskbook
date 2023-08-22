@@ -1,0 +1,99 @@
+0. Virtual Environment
+* activate
+% cd flaskbook
+% source [name]/bin/activate
+
+* deactivate
+([name]) % deactivate
+
+
+1. Flask 명령어
+* flask run (w. debug mode)
+% flask run --debug
+[or]
+# [name].py 
+if __name__ == '__main__':
+    app.run(debug=True)
+
+# Terminal
+% python3 [name].py
+
+* flask routes
+
+* flask shell
+ Useful when debugging or testing.
+
+
+2. 환경 변수 설정
+minimalapp % export FLASK_APP=[name].py
+minimalapp % export FLASK_ENV=development
+ Auto debugging mode. 오류 로그를 웹 페이지에서 확인할 수 있음.
+[or]
+minimalapp % export FLASK_ENV=production
+
+# Terminal
+% pip install python-dotenv
+
+# flaskbook/.env
+FLASK_APP=aapps.minimalapp.app.py
+FLASK_ENV=development
+
+
+3. Routing
+: 요청한 곳의 URI와 실제로 처리를 담당하는 함수를 연결하는 작업.
+https://127.0.0.1:5000/[This part]
+
+# app.py
+...
+@app.route("/[Rule]",
+    methods=['GET', 'POST'],
+    endpoint="[Endpoint]")
+
+e.g. (w. variable)
+http://127.0.0.1:5000/hello/Josh
+Hello, Josh!
+
+# app.py
+...
+@app.route("/hello/<string: name>",
+    methods=['GET', 'POST'],
+    endpoint="[Endpoint]")
+def hello(name):
+    return f"Hello, {name}!"
+
+<[converter]: name>
+ [converter] can be string, int, float, path, uuid.
+
+* Endpoint
+임의로 설정해줄 수도 있고 (e.g. @app.route([Rule], [Methods], endpoint='[name]')), 따로 명시해주지 않았을 때는 함수 이름이 endpoint가 된다.
+
+A. Appendix
+* flask run
+Usage: flask run [OPTIONS]
+
+  Run a local development server.
+
+  This server is for development purposes only. It does not provide the
+  stability, security, or performance of production WSGI servers.
+
+  The reloader and debugger are enabled by default with the '--debug' option.
+
+Options:
+  --debug / --no-debug            Set debug mode.
+  -h, --host TEXT                 The interface to bind to.
+  -p, --port INTEGER              The port to bind to.
+  --cert PATH                     Specify a certificate file to use HTTPS.
+  --key FILE                      The key file to use when specifying a
+                                  certificate.
+  --reload / --no-reload          Enable or disable the reloader. By default
+                                  the reloader is active if debug is enabled.
+  --debugger / --no-debugger      Enable or disable the debugger. By default
+                                  the debugger is active if debug is enabled.
+  --with-threads / --without-threads
+                                  Enable or disable multithreading.
+  --extra-files PATH              Extra files that trigger a reload on change.
+                                  Multiple paths are separated by ':'.
+  --exclude-patterns PATH         Files matching these fnmatch patterns will
+                                  not trigger a reload on change. Multiple
+                                  patterns are separated by ':'.
+  --help                          Show this message and exit.

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Form</title>
+
+    <!--CSS link-->
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+</head>
+
+<body>
+    <h1>Basic Form</h1>
+    <form
+        action="{{url_for('contact_complete')}}"
+        method="POST"
+        novalidate="novalidate"
+    >
+        <table>
+            <tr>
+                <td>User Name</td>
+                <td>
+                    <input
+                        type="text"
+                        name="username"
+                        value="{{username}}"
+                        placeholder="USERNAME"
+                    />
+                </td>
+            </tr>
+            <tr>
+                <td>Mail Address</td>
+                <td>
+                    <input
+                        type="text"
+                        name="email"
+                        value="{{email}}"
+                        placeholder="MAIL ADDRESS"
+                    />
+                </td>
+            </tr>
+            <tr>
+                <td>Content</td>
+                <td>
+                    <textarea name="description" placeholder="CONTENT">
+                        {{description}}
+                    </textarea>
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="GO" />
+    </form>
+</body>
+</html>
