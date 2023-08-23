@@ -1,10 +1,20 @@
 0. Virtual Environment
+* venv
+% python3 -m venv [name]
+
 * activate
 % cd flaskbook
 % source [name]/bin/activate
 
 * deactivate
 ([name]) % deactivate
+
+* Installation
+([name]) % pip install *
+: flask
+: flake8, black, isort, mypy (Code checker & Formatter)
+: python-dotenv (Set environment through .env file)
+: email-validator
 
 
 1. Flask 명령어
@@ -67,7 +77,52 @@ def hello(name):
 * Endpoint
 임의로 설정해줄 수도 있고 (e.g. @app.route([Rule], [Methods], endpoint='[name]')), 따로 명시해주지 않았을 때는 함수 이름이 endpoint가 된다.
 
-A. Appendix
+
+4. Request
+"methods"를 이용하여 GET, POST 등을 설정해준 후에 request를 이용하여 POST 해준 값을 받고, redirect(url_for([endpoint]))의 형식으로 페이지를 넘기면 된다.
+
+
+E.g.
+...
+@app.route("/contact/complete", methods=["GET", "POST"])
+def contact_complete():
+    if request.method == "POST":
+        # Receive values using 'request.form'
+        username = request.form["username"]
+        email = request.form["email"]
+        description = request.form["description"]
+        
+        # TODO: Shoot an E-mail.
+        
+        
+        # Redirect to "contact_complete" endpoint.
+        return redirect(url_for("contact_complete"))
+    return render_template("contact_complete.html")
+
+
+A. Appendix Ch.1
+* SECRET_KEY
+: For the sake of session security, we assign SECRET_KEY with a random string.
+
+E.g.
+...
+app = Flask(__name__)
+app.config["SECRET_KEY"] = "2AZSMSfnbd6y3hei8"
+...
+
+* Logging
+: Logger helps check the status of application (a.k.a. application log).
+: CRITICAL > ERROR > WARNING > INFO > DEBUG
+
+E.g.
+...
+app = Flask(__name__)
+app.logger.setLevel(logging.DEBUG)
+...
+
+
+
+B. Appendix Ch.2
 * flask run
 Usage: flask run [OPTIONS]
 
